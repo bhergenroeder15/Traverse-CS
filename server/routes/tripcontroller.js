@@ -30,6 +30,18 @@ const tripController = {
     } catch(err) {
       return next({log: 'Error in tripcontroller deleteTrip', status: 400})
     }
+  },
+
+  async addAccommodations(req, res, next){
+    try{
+      const matching = await Trip.findOne({_id: req.params._id})
+      const newAccommodations = await Trip.findOneAndUpdate({_id: req.params._id}, {accommodations: req.body.update}, {new: true})
+      res.locals.newAccommodations = newAccommodations
+      return next()
+
+    } catch(err){
+      return next({log: 'Error in tripcontroller addAccommodations', status: 400})
+    }
   }
 }
 

@@ -52,7 +52,26 @@ class App extends Component {
             x.style.display = 'block'
         }
     }
-
+    addAccommodations(id){
+        const accommodations = document.getElementById(`accommodationsTrip${id}`);
+        if (accommodations.isContentEditable === false) {
+            console.log('should be able to edit now')
+            accommodations.contentEditable = true
+            accommodations.style.backgroundColor = "#dddbdb"
+        } else {
+            const update = accommodations.innerHTML;
+            fetch(`/trips/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type' : 'application/json',
+                },
+                body : JSON.stringify({update: update})
+            })
+            .then((response) => console.log(response))
+            .then(accommodations.contentEditable = false)
+            .then(accommodations.style.backgroundColor = 'white')
+        }
+    }
 
     componentDidMount(){
             fetch('/trips')
@@ -64,27 +83,20 @@ class App extends Component {
             .catch(err => console.log('Fetch request in App.jsx api fetch: ', err))
     }
 
-    // componentDidUpdate(){
-    //     fetch('/trips/')
-    //         .then(res => res.json())
-    //         .then((trips) => {
-    //             console.log('fetch response: ', trips)
-    //             if (!Array.isArray(trips)) trips = [];
-    //             return this.setState({trips})
-    //         })
-    //         .catch(err => console.log('Fetch request in App.jsx api fetch: ', err))
-    // }
     render () {
 
         const trips = [];
         for (let i = 0; i < this.state.trips.length; i++){
             trips.push(
                 <UpcomingTrip 
+                key={`key${i}`}
                 id={i} 
                 objectId={this.state.trips[i]._id}
                 location={this.state.trips[i].location} 
                 startDate={ new Date(this.state.trips[i].startDate).toDateString()} 
                 endDate={new Date(this.state.trips[i].endDate).toDateString()} 
+                accommodations={this.state.trips[i].accommodations}
+                addAccommodations={this.addAccommodations}
                 expandTrip={this.expandTrip} 
                 deleteTrip={this.deleteTrip}
                 />)

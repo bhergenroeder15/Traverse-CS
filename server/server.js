@@ -33,6 +33,9 @@ tripRouter.get('/', tripController.getAllTrips,
 tripRouter.post('/', tripController.createTrip, 
 (req, res) => res.status(200).send(res.locals.trips));
 
+tripRouter.patch('/:_id', tripController.addAccommodations,
+(req, res) => res.status(200).send(res.locals.newAccommodations))
+
 tripRouter.delete('/:_id', tripController.deleteTrip, 
 (req, res) => res.status(200).send('router success'))
 

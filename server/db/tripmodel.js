@@ -14,6 +14,11 @@ const tripSchema = new Schema({
     endDate: {
         type: Date,
         required: true,
+    },
+    accommodations:{
+        type: String,
+        default: 'Nothing to see here yet!',
+        required: false,
     }
 
 })

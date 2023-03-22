@@ -12,6 +12,7 @@ class App extends Component {
 
         this.addItinerary = this.addItinerary.bind(this);
         this.deleteTrip = this.deleteTrip.bind(this);
+        this.expandTrip = this.expandTrip.bind(this)
     }
     addItinerary(){
         const destination = document.getElementById('addDestination').value;
@@ -29,19 +30,29 @@ class App extends Component {
         })
     }   
 
-    deleteTrip(location, startDate, endDate){
-        fetch(`/trips/${location}`, {
+    deleteTrip(objectId){
+        fetch(`/trips/${objectId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type' : 'application/json',
             },
-            body : JSON.stringify({location: location, startDate: startDate, endDate: endDate})
+            body : JSON.stringify({objectId: objectId})
         })
         .then((response) => {
             console.log('delete fetch successful')
         })
         .then(window.location.reload())
     }
+
+    expandTrip(id){
+        let x = document.getElementById(id);
+        if (x.style.display === 'block'){
+            x.style.display = 'none'
+        } else {
+            x.style.display = 'block'
+        }
+    }
+
 
     componentDidMount(){
             fetch('/trips')
@@ -64,12 +75,22 @@ class App extends Component {
     //         .catch(err => console.log('Fetch request in App.jsx api fetch: ', err))
     // }
     render () {
-        
 
         const trips = [];
-        this.state.trips.forEach(el => {
-            trips.push(<UpcomingTrip location={el.location} startDate={ new Date(el.startDate).toDateString()} endDate={new Date(el.endDate).toDateString()} deleteTrip={this.deleteTrip}/>)
-        })
+        for (let i = 0; i < this.state.trips.length; i++){
+            trips.push(
+                <UpcomingTrip 
+                id={i} 
+                objectId={this.state.trips[i]._id}
+                location={this.state.trips[i].location} 
+                startDate={ new Date(this.state.trips[i].startDate).toDateString()} 
+                endDate={new Date(this.state.trips[i].endDate).toDateString()} 
+                expandTrip={this.expandTrip} 
+                deleteTrip={this.deleteTrip}
+                />)
+
+        }
+        
         return (
             <div className='router'>
                 <h1>Traverse</h1>
@@ -83,11 +104,11 @@ class App extends Component {
                 </div>
                 <div className="form">
                     <label htmlFor="startDate">Start date: </label>
-                    <input type="date" name="startDate" id="addStartDate"/>
+                    <input type="date" name="startDate"  id="addStartDate"/>
                 </div>
                 <div className="form">
                     <label htmlFor="endDate">End date: </label>
-                    <input type="date" name="endDate" id="addEndDate"/>
+                    <input type="date" name="endDate"  id="addEndDate"/>
                 </div>
                 <div className="form">
                     <input type="submit" value="Submit" onClick={this.addItinerary}/>

@@ -33,7 +33,7 @@ tripRouter.get('/', tripController.getAllTrips,
 tripRouter.post('/', tripController.createTrip, 
 (req, res) => res.status(200).send(res.locals.trips));
 
-tripRouter.delete('/:location', tripController.deleteTrip, 
+tripRouter.delete('/:_id', tripController.deleteTrip, 
 (req, res) => res.status(200).send('router success'))
 
 app.use('/trips', tripRouter)

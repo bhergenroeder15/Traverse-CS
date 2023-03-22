@@ -12,10 +12,16 @@ class TripDetails extends Component {
         }
         
         return(
-            <div>
-                <div>Accommodations:</div>
-                <div id={`accommodationsTrip${this.props.objectId}`}>{this.props.accommodations}</div>
-                <button type='submit' onClick={()=>{this.props.addAccommodations(this.props.objectId)}}>Add Accommodations</button>
+            <div className='tripDetails'>
+                <div className='accommodationsWrapper'>
+                    <div className='accommodations'>
+                        <div>Accommodations: {' '}</div>
+                        <div id={`accommodationsTrip${this.props.objectId}`}>{' '}{this.props.accommodations}</div>
+                    </div>
+                    <button type='submit' className='buttons' onClick={()=>{this.props.addAccommodations(this.props.objectId)}}>Add/Edit Accommodations</button>
+                </div>
+                
+
                 <div className='dayList'>{daysOfTrip}</div>
             </div>
         )

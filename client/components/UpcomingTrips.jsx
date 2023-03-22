@@ -5,11 +5,11 @@ import TripDetails from './TripDetails.jsx';
 class UpcomingTrip extends Component {
     render(){
         return (
-            <div>
-                <div>{this.props.location}</div>
-                <div>{this.props.startDate}</div>
-                <div>{this.props.endDate}</div>
-                <input type="submit" value="Delete" onClick={() => {this.props.deleteTrip(this.props.objectId)}}/>
+            <div className='upcomingTrip'>
+                <div className='tripThumbnail'>
+                    <h3>{this.props.location}: {this.props.startDate} - {this.props.endDate}</h3>
+                    <input className='buttons' type="button" value="Delete trip" onClick={() => {this.props.deleteTrip(this.props.objectId, this.props.location, this.props.startDate, this.props.endDate)}}/>
+                </div>
                 
                 <div id={`trip${this.props.id}`} 
                 style={{display:"none"}}
@@ -21,7 +21,7 @@ class UpcomingTrip extends Component {
                     addAccommodations={this.props.addAccommodations}
 
                 /></div>
-                <button onClick={() => {this.props.expandTrip(`trip${this.props.id}`)}}>Expand/Collapse details</button>
+                <button className='expandButton' onClick={() => {this.props.expandTrip(`trip${this.props.id}`)}}>Expand/Collapse details</button>
             </div>
         )
     }

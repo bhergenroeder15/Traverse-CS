@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const path = require('path');
 const port = process.env.PORT || 3000
 const tripController = require('./routes/tripcontroller')
+const dayController = require('./routes/daycontroller')
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/traverse')
@@ -25,7 +26,7 @@ if (process.env.NODE_ENV === 'production'){
 }
 
 const tripRouter = express.Router();
-
+const dayRouter = express.Router();
 
 tripRouter.get('/', tripController.getAllTrips, 
 (req, res) => res.status(200).json(res.locals.trips));
@@ -39,7 +40,18 @@ tripRouter.patch('/:_id', tripController.addAccommodations,
 tripRouter.delete('/:_id', tripController.deleteTrip, 
 (req, res) => res.status(200).send('router success'))
 
+dayRouter.get('/', dayController.getAllDays,
+(req, res) => res.status(200).json(res.locals.days))
+
+dayRouter.post('/', dayController.createDay,
+(req, res) => res.status(200).send(res.locals.day))
+
+dayRouter.delete('/', dayController.deleteDay,
+(req, res) => res.status(200).send('day router success'))
+
+
 app.use('/trips', tripRouter)
+app.use('/days', dayRouter)
 app.use((req, res) => res.sendStatus(404));
 
 app.use((err, req, res, next) => {

@@ -42,6 +42,7 @@ module.exports = {
         },
         proxy: {
           '/trips': 'http://localhost:3000/',
+          '/days': 'http://localhost:3000/'
         },
       },
 }

@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: rgb(121,77,131);
+    background: radial-gradient(circle, rgba(121,77,131,1) 0%, rgb(33, 13, 84) 97%);    
+    max-height: 96vh;
+    color: rgb(235, 213, 241);
+    overflow: auto; 
+}
+
+h1 {
+    --bg-size: 400%;
+    --color-one: hsl(285, 90%, 55%);
+    --color-two: hsl(40 95% 55%);
+    -webkit-text-stroke: 2px black; 
+    font-size: 5.5vw;
+    font-style: italic;
+    background: linear-gradient(
+                    90deg,
+                    var(--color-one),
+                    var(--color-two),
+                    var(--color-one)
+                ) 0 0 / var(--bg-size) 100%;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: move-bg 8s infinite linear; 
+}
+@media (prefers-reduced-motion: no-preference) {
+    h1 {
+      animation: move-bg 8s linear infinite;
+    }
+    @keyframes move-bg {
+      to {
+        background-position: var(--bg-size) 0;
+      }
+    }
+  }
+
+
+.tripDashboard::-webkit-scrollbar {
+  background: rgba(121,77,131,1) 0%;
+}
+.tripDashboard::-webkit-scrollbar-thumb {
+    background: rgba(23,0,83,1) 97%;
+  }
+.tripDashboard {
+    max-height: 50vh;
+    overflow-y: scroll;
+    border: solid 2px black; 
+}
+.upcomingTrip {
+    border: solid 1.5px black;
+    border-radius: 6px;
+    box-shadow: 0px 0px 5px rgb(14, 0, 49); 
+    display: flex;
+    flex-direction: column; 
+    padding: 8px;
+    margin: 8px;
+    padding-bottom: 0
+}
+
+.tripThumbnail {
+    display: flex;
+    justify-content: space-between;
+}
+
+.expandButton {
+    color: rgb(212, 212, 212);
+  margin-block: 4px;
+  background: none;
+  border: solid 1px black;
+  border-radius: 8px;
+}
+
+.expandButton:hover {
+    background: rgb(121,77,131);
+    background: radial-gradient(circle, rgb(85, 54, 93) 0%, rgba(23,0,83,1) 97%); 
+}
+
+#itineraryForm {
+    display: flex;
+    justify-content: space-between; 
+    border: solid 2px black;
+    padding: 12px;
+}
+.accommodationsWrapper {
+    display: flex; 
+    justify-content: space-between;
+}
+.accommodations {
+    display: flex;
+    font-size: 20px; 
+} 
+.accommodations > * {
+    padding-right: 10px; 
+}
+
+.tripDetails > * {
+    margin-block: 10px;
+    padding-left: 10px;
+}
+
+.buttons {
+    background: rgb(121,77,131);
+    background: radial-gradient(circle, rgb(85, 54, 93) 0%, rgba(23,0,83,1) 97%); 
+    color: rgb(235, 213, 241);
+    border: solid 1px black; 
+    border-radius: 6px; 
+}
+.buttons:hover {
+    background:  rgb(85, 54, 93) 0%;
+}
+
+.form {
+    background: rgb(235, 213, 241); 
+}

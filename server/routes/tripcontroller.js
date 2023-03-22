@@ -16,7 +16,9 @@ const tripController = {
       return next();
     };
     try {
+      console.log(req.body.startDate, req.body.endDate)
       const newTrip = await Trip.create({location: req.body.location, startDate: req.body.startDate, endDate: req.body.endDate});
+      console.log(newTrip)
       return next()
     } catch(err) {
       return next({log: 'Error in tripcontroller createTrip', status: 400})

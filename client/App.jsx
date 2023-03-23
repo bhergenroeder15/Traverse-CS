@@ -123,21 +123,23 @@ class App extends Component {
             dateRange.push(d.toDateString());
         }
         console.log(dateRange)
+       
+            for (const date of dateRange) {
+                   await fetch('/days', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type' : 'application/json',
+                    },
+                    body: JSON.stringify({location: location, date: date})
+                })
+                .then((response) => {
+                    console.log(response)
+                })
+                
+            }
+
         
-            dateRange.forEach(async (date) => {
-                 await fetch('/days', {
-                   method: 'DELETE',
-                   headers: {
-                       'Content-Type' : 'application/json',
-                   },
-                   body: JSON.stringify({location: location, date: date})
-               })
-               .then((response) => {
-                   console.log(response)
-               })
-               
-           })
-        
+           
             await fetch(`/trips/${objectId}`, {
                 method: 'DELETE',
                 headers: {

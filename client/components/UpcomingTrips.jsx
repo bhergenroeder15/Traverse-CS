@@ -8,7 +8,7 @@ class UpcomingTrip extends Component {
             <div className='upcomingTrip'>
                 <div className='tripThumbnail'>
                     <h3>{this.props.location}: {this.props.startDate} - {this.props.endDate}</h3>
-                    <input className='buttons' type="button" value="Delete trip" onClick={async() => {await this.props.deleteTrip(this.props.objectId, this.props.location, this.props.startDate, this.props.endDate)}}/>
+                    <input className='buttons' type="button" value="Delete trip" onClick={() => {this.props.deleteTrip(this.props.objectId, this.props.location, this.props.startDate, this.props.endDate)}}/>
                 </div>
                 
                 <div id={`trip${this.props.id}`} 

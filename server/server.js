@@ -46,6 +46,12 @@ dayRouter.get('/:date', dayController.getOneDay,
 dayRouter.get('/', dayController.getAllDays,
 (req, res) => res.status(200).json(res.locals.days))
 
+dayRouter.patch('/deleteFrom/:day', dayController.deleteEvent,
+(req, res) => res.status(200).send('event deleted'))
+
+dayRouter.patch('/:day', dayController.addEvent,
+(req, res) => res.status(200).send('event added'))
+
 dayRouter.post('/', dayController.createDay,
 (req, res) => res.status(200).send(res.locals.day))
 

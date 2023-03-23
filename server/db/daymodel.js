@@ -10,10 +10,7 @@ const daySchema = new Schema({
         type: String,
         required: true,
     },
-    events: [{
-        event: String,
-        time: Date,
-     }]
+    events: []
 })
 
 

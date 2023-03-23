@@ -10,12 +10,72 @@ class App extends Component {
             trips: [],
             days: []
         }
-
+        this.addEvent = this.addEvent.bind(this)
+        this.openForm = this.openForm.bind(this)
+        this.closeForm = this.closeForm.bind(this)
         this.addItinerary = this.addItinerary.bind(this);
         this.deleteTrip = this.deleteTrip.bind(this);
         this.expandTrip = this.expandTrip.bind(this)
         this.addDays = this.addDays.bind(this)
     }
+
+    addEvent(day, timeInput, typeInput, placeInput){
+        let time = document.getElementById(timeInput).value;
+        const type = document.getElementById(typeInput).value;
+        const place = document.getElementById(placeInput).value;
+        time = time.split(':')
+        let hours = Number(time[0]);
+        let minutes = Number(time[1]);
+        let timeValue
+        if (hours > 0 && hours <= 12) {
+            timeValue= "" + hours;
+          } else if (hours > 12) {
+            timeValue= "" + (hours - 12);
+          } else if (hours == 0) {
+            timeValue= "12";
+          }
+        timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;
+        timeValue += (hours >= 12) ? " P.M." : " A.M.";
+          console.log(day)
+          fetch(`/days/${day}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type' : 'application/json',
+            },
+            body : JSON.stringify({time: timeValue, type: type, place: place})
+            })
+            .then((response) => {
+        })
+            .then(window.location.reload())
+
+
+    }
+
+    deleteEvent(day, timeInput, typeInput, placeInput){
+        fetch(`/days/deleteFrom/${day}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type' : 'application/json',
+            },
+            body : JSON.stringify({time: timeInput, type: typeInput, place: placeInput})
+            })
+            .then((response) => {
+                console.log(response)
+            })
+            .then(window.location.reload())
+    }
+    
+
+    openForm(id) {
+        document.getElementById(id).style.display = "flex"; 
+        document.getElementById(id).style.justifyContent= "space-between";
+    }
+      
+    closeForm(e, id) {
+        e.preventDefault()
+        document.getElementById(id).style.display = "none";
+    }
+
     addItinerary(){
         const destination = document.getElementById('addDestination').value;
         const startDate = document.getElementById('addStartDate').value
@@ -28,7 +88,6 @@ class App extends Component {
             body : JSON.stringify({location: destination, startDate: startDate, endDate: endDate})
             })
             .then((response) => {
-                console.log('added')
         })
             .then(window.location.reload())
 
@@ -61,11 +120,9 @@ class App extends Component {
     deleteTrip(objectId, location, startDate, endDate){
         const dateRange = []
         for (let d = new Date(startDate); d <= new Date(endDate); d.setDate(d.getDate() + 1)) {
-            console.log('date iteration: ', d)
             dateRange.push(d.toDateString());
         }
-        dateRange.forEach(date => {
-            console.log('deleting: ', date)
+        const dayPromise =  dateRange.forEach(date => {
              fetch('/days', {
                 method: 'DELETE',
                 headers: {
@@ -76,21 +133,22 @@ class App extends Component {
             .then((response) => {
                 console.log(response)
             })
-            .then(
-                fetch(`/trips/${objectId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type' : 'application/json',
-                    },
-                    body : JSON.stringify({objectId: objectId})
-                })
-                .then((response) => {
-                    console.log('delete fetch successful')
-                })
-                .then(window.location.reload())
-            )
+            
         })
-        
+        Promise.all(dayPromise).then(
+            fetch(`/trips/${objectId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type' : 'application/json',
+                },
+                body : JSON.stringify({objectId: objectId})
+            })
+            .then((response) => {
+                console.log('delete fetch successful')
+            })
+            
+        )
+        .then(window.location.reload())
     }
 
     expandTrip(id){
@@ -127,7 +185,6 @@ class App extends Component {
             .then(res => res.json())
             .then((trips) => {
                 if (!Array.isArray(trips)) trips = [];
-                console.log('TRIPS ARRAY: ', trips)
                 trips.sort((a, b) => Date.parse(a.startDate) - Date.parse(b.startDate))
                 this.setState({trips})
             })
@@ -157,6 +214,10 @@ class App extends Component {
                 addAccommodations={this.addAccommodations}
                 expandTrip={this.expandTrip} 
                 deleteTrip={this.deleteTrip}
+                openForm={this.openForm}
+                closeForm={this.closeForm}
+                addEvent={this.addEvent}
+                deleteEvent={this.deleteEvent}
                 />)
 
         }

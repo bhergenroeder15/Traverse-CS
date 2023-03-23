@@ -21,7 +21,13 @@ class UpcomingTrip extends Component {
                     days={this.props.days}
                     accommodations={this.props.accommodations}
                     addAccommodations={this.props.addAccommodations}
+                    openForm={this.props.openForm}
+                    closeForm={this.props.closeForm}
+                    addEvent={this.props.addEvent}
+                    deleteEvent={this.props.deleteEvent}
 
+
+    
                 /></div>
                 <button className='expandButton' onClick={() => {this.props.expandTrip(`trip${this.props.id}`)}}>Expand/Collapse details</button>
             </div>

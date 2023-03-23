@@ -30,6 +30,28 @@ const dayController = {
           return next({log: 'Error in dayController createDay', status: 400})
         }
       },
+      async addEvent(req, res, next) {
+        try{
+         
+          const newEvent = await Day.findOneAndUpdate({date: req.params.day}, {$push: {events: {time: req.body.time, type: req.body.type, place: req.body.place}}}, {new: true})
+          console.log(newEvent)
+          return next()
+        } catch (err) {
+          return next({log: 'Error in dayController addEvent', status: 400})
+        }
+      },
+
+      async deleteEvent(req, res, next) {
+        try{
+          console.log(req.params)
+          console.log(req.body)
+          const updatedEvent = await Day.findOneAndUpdate({date: req.params.day}, {$pull: {events: req.body}}, {new: true})
+          console.log(updatedEvent)
+          return next()
+        } catch(err) {
+          return next({log: 'Error in dayController deleteEvent', status: 400})
+        }
+      },
 
       async deleteDay(req, res, next) {
         try {      

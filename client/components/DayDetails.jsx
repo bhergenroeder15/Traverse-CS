@@ -5,16 +5,26 @@ class DayDetails extends Component {
 
     
 
-
+    
     render(){
         const stateDay = this.props.days.filter(day => day.date === this.props.day)   
         const events = []
-        events.push(<Events key='1' events={stateDay[0].events}/>)
+        if (stateDay.length) events.push(
+        <Events 
+            key='1' day={this.props.day} 
+            events={stateDay[0].events}
+            openForm={this.props.openForm}
+            closeForm={this.props.closeForm}
+            addEvent={this.props.addEvent}
+            deleteEvent={this.props.deleteEvent}
+
+            />)
         return(
-            <div>
-                <div>{this.props.day}</div>
-                <div>Events: 
-                    <div>{events}</div>
+            <div className='dayThumbnail'>
+                <div className='dayHeader'>{this.props.day}</div>
+                <div>
+                    <div className='eventsHeader'>Events:</div> 
+                    <div className='eventsList'>{events}</div>
                 </div>
                 
                

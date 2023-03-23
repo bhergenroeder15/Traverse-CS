@@ -8,7 +8,7 @@ class TripDetails extends Component {
         const startDate = Date.parse(this.props.startDate);
         const endDate = Date.parse(this.props.endDate)
         for (let i = new Date(startDate); i <= endDate; i.setDate(i.getDate()+1)){
-            daysOfTrip.push(<DayDetails key={`key${i}`} day={i.toDateString()} />)
+            daysOfTrip.push(<DayDetails key={`key${i}`} days={this.props.days} day={i.toDateString()} location={this.props.location}/>)
         }
         
         return(

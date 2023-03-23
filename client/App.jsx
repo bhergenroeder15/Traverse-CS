@@ -142,7 +142,6 @@ class App extends Component {
     }
 
     render () {
-
         const trips = [];
         for (let i = 0; i < this.state.trips.length; i++){
             trips.push(
@@ -154,6 +153,7 @@ class App extends Component {
                 startDate={ new Date(this.state.trips[i].startDate).toDateString()} 
                 endDate={new Date(this.state.trips[i].endDate).toDateString()} 
                 accommodations={this.state.trips[i].accommodations}
+                days={this.state.days}
                 addAccommodations={this.addAccommodations}
                 expandTrip={this.expandTrip} 
                 deleteTrip={this.deleteTrip}

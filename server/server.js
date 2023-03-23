@@ -20,7 +20,7 @@ app.use(express.json())
 
 if (process.env.NODE_ENV === 'production'){
     app.use('/build', express.static(path.join(__dirname, '../build')))
-    app.use('/', (req, res) => {
+    app.get('/', (req, res) => {
         return res.status(200).sendFile(path.join(__dirname, '../index.html'))
     });
 }
@@ -39,6 +39,9 @@ tripRouter.patch('/:_id', tripController.addAccommodations,
 
 tripRouter.delete('/:_id', tripController.deleteTrip, 
 (req, res) => res.status(200).send('router success'))
+
+dayRouter.get('/:date', dayController.getOneDay,
+(req, res) => res.status(200).json(res.locals.day))
 
 dayRouter.get('/', dayController.getAllDays,
 (req, res) => res.status(200).json(res.locals.days))

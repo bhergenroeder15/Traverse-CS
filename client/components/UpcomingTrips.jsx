@@ -14,9 +14,11 @@ class UpcomingTrip extends Component {
                 <div id={`trip${this.props.id}`} 
                 style={{display:"none"}}
                 ><TripDetails 
+                    location={this.props.location}
                     objectId={this.props.objectId} 
                     startDate={this.props.startDate} 
                     endDate={this.props.endDate} 
+                    days={this.props.days}
                     accommodations={this.props.accommodations}
                     addAccommodations={this.props.addAccommodations}
 

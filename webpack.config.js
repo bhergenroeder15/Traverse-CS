@@ -16,12 +16,16 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        presets: [
+                            ['@babel/preset-env', { targets: 'defaults' }],
+                            ['@babel/preset-react', { targets: 'defaults' }],
+                        ],
                     }
                 }
             }, 
             {
                 test:/\.s[ac]ss$/i,
+                exclude: /node_modules/,
                 use: [
                     'style-loader',
                     'css-loader',
@@ -32,7 +36,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './index.html'),
+            title: 'Development',
+            template: './index.html',
           }),
     ],
     devServer: {

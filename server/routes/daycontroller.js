@@ -4,13 +4,22 @@ const dayController = {
     async getAllDays(req,res,next) {
         try {
           const days = await Day.find({})
-          console.log(days)
           res.locals.days = days;
           return next();
         } catch (err) {
           return next({log: 'Error in dayController getAllDays', status: 400})
         }
       }, 
+
+      async getOneDay(req,res,next) {
+        try {
+            const day = await Day.findOne({'date': req.params.date})
+            res.locals.day = day
+            return next();
+        } catch(err) {
+            return next({log: 'Error in dayController getOneDay', status: 400})
+        }
+      },
 
       async createDay(req, res, next) {
         try {

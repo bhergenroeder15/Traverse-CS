@@ -35,7 +35,7 @@ class App extends Component {
             timeValue= "12";
           }
         timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;
-        timeValue += (hours >= 12) ? " P.M." : " A.M.";
+        timeValue += (hours >= 12) ? " pm" : " am";
           console.log(day)
           fetch(`/days/${day}`, {
             method: 'PATCH',
@@ -117,26 +117,28 @@ class App extends Component {
        
     }
 
-    deleteTrip(objectId, location, startDate, endDate){
+     async deleteTrip(objectId, location, startDate, endDate){
         const dateRange = []
         for (let d = new Date(startDate); d <= new Date(endDate); d.setDate(d.getDate() + 1)) {
             dateRange.push(d.toDateString());
         }
-        const dayPromise =  dateRange.forEach(date => {
-             fetch('/days', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type' : 'application/json',
-                },
-                body: JSON.stringify({location: location, date: date})
-            })
-            .then((response) => {
-                console.log(response)
-            })
-            
-        })
-        Promise.all(dayPromise).then(
-            fetch(`/trips/${objectId}`, {
+        console.log(dateRange)
+        
+            dateRange.forEach(async (date) => {
+                 await fetch('/days', {
+                   method: 'DELETE',
+                   headers: {
+                       'Content-Type' : 'application/json',
+                   },
+                   body: JSON.stringify({location: location, date: date})
+               })
+               .then((response) => {
+                   console.log(response)
+               })
+               
+           })
+        
+            await fetch(`/trips/${objectId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type' : 'application/json',
@@ -147,7 +149,7 @@ class App extends Component {
                 console.log('delete fetch successful')
             })
             
-        )
+        
         .then(window.location.reload())
     }
 

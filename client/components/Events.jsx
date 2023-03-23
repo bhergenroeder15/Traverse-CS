@@ -5,7 +5,10 @@ class Events extends Component {
 
     render(){
         
-        console.log('props in Events: ', this.props)
+        
+        this.props.events.sort(function(a, b) {
+            return new Date('1970/01/01 ' + a.time) - new Date('1970/01/01 ' + b.time);
+        })
         let eventsList;
         if (!this.props.events.length) {
             eventsList = 'No events added'

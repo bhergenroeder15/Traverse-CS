@@ -12,9 +12,24 @@ export const closeFormActionCreator = () => ({
     type: types.CLOSE_FORM,
 });
 
-export const addItineraryActionCreator = () => ({
-    type: types.ADD_ITINERARY,
+export const addTripActionCreator = () => ({
+    type: types.ADD_TRIP,
 });
+
+export const newDestinationActionCreator = value => ({
+    type: types.NEW_DESTINATION,
+    payload: value,
+})
+
+export const newStartDateActionCreator = value => ({
+    type: types.NEW_START_DATE,
+    payload: value,
+})
+
+export const newEndDateActionCreator = value => ({
+    type: types.NEW_END_DATE,
+    payload: value,
+})
 
 export const deleteTripActionCreator = () => ({
     type: types.DELETE_TRIP,
